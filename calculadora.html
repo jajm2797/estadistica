@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Estadística</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        body {
+            background-color: rgba(red, green, blue, alpha);
+        }
+
+        #tabla {
+            text-align: center;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+            width: 40%;
+        }
+
+        #tablaMedia{
+            text-align: center;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+            width: 10%;
+        }
+
+    </style>
+    <script>
+		const getDataFromInput = () => {            
+            const data = document.getElementById("inputValue").value
+            let desviacionMedia = 0;
+
+            if(data == "" || data == null) return alert("El Campo no debe estar vacío")
+           
+            const data2 = data.split(",")
+
+            const media = getMedia(data2);
+
+            getDesviacionMedia(data2, media)
+
+            let divData = document.getElementById("tablaBody")
+
+            data2.forEach((e, index) => {                
+                divData.innerHTML += 
+                `<tr id='hola'> 
+                    <td>${e}</td>
+                    <td>${parseFloat(Math.pow(Math.abs(e - Number(media).toFixed(2)), 2)).toFixed(2)}</td>
+                </tr>`
+            });
+            
+        }
+
+        const getDesviacionMedia = (arr, media) => {
+            let i = 0; calculoSinRaiz = 0, calculoConRaiz = 0
+            let sumatoria = new Number(0)
+
+            arr.forEach(e => {
+                console.log(media)
+                sumatoria += Math.pow(Math.abs(e - Number(media).toFixed(2)), 2) 
+            })
+
+            console.log(sumatoria)
+
+            calculoSinRaiz = sumatoria / arr.length;
+
+            calculoConRaiz = Number(Math.sqrt(calculoSinRaiz))
+            let desviacionMediaTableData = document.getElementById("tablaBodyDesviacionMedia")
+            desviacionMediaTableData.innerHTML = 
+                `<tr>
+                    <td>
+                        ${Number(calculoConRaiz).toFixed(2)}
+                    </td>
+                </tr>`
+        }
+
+        const getMedia = (arr) => {
+            let i=0, value = 0
+
+            while(i<arr.length){
+                value += Number(arr[i++])
+            }
+
+            const data = value / arr.length
+
+            let mediaTableData = document.getElementById("tablaBodyMedia")
+            mediaTableData.innerHTML = 
+                `<tr>
+                    <td>
+                        ${Number(data).toFixed(2)}
+                    </td>
+                </tr>`
+            return data;
+        }
+    </script>
+</head>
+<body>
+    <h1>Calculadora Rebequita</h1>
+    <h3>Introduce los Datos separados por una coma (,) </h3>
+    <header>
+        <input id="inputValue" type="text" placeholder="Introduce los Datos" />
+        <button onclick="getDataFromInput()">Calcular</button>
+    </header>
+
+    <table id="tabla" border="5">
+        <thead id="tablaHead">
+            <th colspan="1">
+                Valor
+            </th> 
+            <th colspan="1">
+                Distancia al Cuadrado de cada valor contra la Media
+            </th>  
+        </thead>
+        <tbody id="tablaBody">
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+
+    <table id="tablaMedia" border="5">
+        <thead id="tablaHeadMedia">
+            <th colspan="1" id="thMedia">
+                Media Aritmética
+            </th>    
+        </thead>
+        <tbody id="tablaBodyMedia">
+        </tbody>
+    </table>  
+
+    &nbsp;
+    &nbsp;
+
+    <table id="tablaMedia" border="5">
+        <thead id="tablaHeadMedia">
+            <th colspan="1" id="thMedia">
+                Desviación Media
+            </th>    
+        </thead>
+        <tbody id="tablaBodyDesviacionMedia">
+        </tbody>
+    </table>
+    
+
+</body>
+</html>
